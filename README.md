@@ -20,16 +20,18 @@
     - **Memory Priority**: Sets background process memory priority to Level 1 (Very Low).
     - **CPU Affinity**: Dynamically restricts background tasks to half of available cores.
 
-## 🏗️ Architecture
+## 🏗️ System Architecture & Layers
 
-UROE follows a modular pipeline architecture inspired by operating system schedulers:
+UROE operates through a multi-layered pipeline, ensuring each optimization is data-driven and safe.
 
-1. **SystemMetrics**: Tracks overall system CPU/RAM pressure.
-2. **ProcessMonitor**: Enumerates all processes and collects detailed metrics (Threads, Handles, Private/Working Set memory).
-3. **BehaviorClassifier**: Categorizes processes as `CRITICAL`, `ACTIVE`, `BACKGROUND`, or `TARGET_APP`.
-4. **AIDecisionEngine**: Computes an optimization probability score.
-5. **OptimizationEngine**: Executes safe, reversible optimization actions.
-6. **Logger**: Provides real-time information on all system actions.
+| Layer | Component | Responsibility | Significance / Importance |
+| :--- | :--- | :--- | :--- |
+| **1. Observation** | `ProcessMonitor` | Scans all active PIDs; collects CPU, RAM (Working/Private Set), Thread, and Handle counts. | Provides the raw telemetry required for informed decision-making. |
+| **2. Context** | `SystemMetrics` | Monitors global system-wide CPU and RAM saturation. | Determines the "Mode" (Monitoring vs. Active Optimization) based on system pressure. |
+| **3. Logic** | `BehaviorClassifier` | Assigns roles like `CRITICAL`, `BACKGROUND`, or `ACTIVE` based on heuristics and paths. | **Safety Gate**: Ensures Windows core services and active user apps are never throttled. |
+| **4. Intelligence** | `AIDecisionEngine`| Native Logistic Regression model using Sigmoid activation. | Calculates the **Optimization Probability**. Actions only fire if `p > 0.65`. |
+| **5. Action** | `OptimizationEngine`| Modifies Process Priority, Core Affinity, and Working Sets. | Implements physical resource reclamation (Memory Priority Level 1). |
+| **6. Visibility** | `Main Dashboard` | Renders a professional real-time console UI with "Net Benefit" logging. | Provides transparency into how much memory the tool is actually saving. |
 
 ## 📈 Net Benefit Analysis
 
