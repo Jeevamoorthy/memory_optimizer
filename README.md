@@ -47,6 +47,8 @@ UROE v3.1 features a transparent "Net Benefit" display. It calculates its own RA
 ```powershell
 g++ -std=c++17 -DUNICODE -D_UNICODE src/*.cpp -o UROE.exe -lpsapi
 ```
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7d174855-007a-44d3-8e23-8bafa956386d" />
+
 
 ## ⚖️ Importance
 Modern applications (especially Electron-based tools and browsers) often claim more resources than they actively use. UROE acts as an intelligent layer between these apps and the OS, ensuring that background tasks do not degrade the experience of the active user, effectively acting as an automated system resource scheduler.
