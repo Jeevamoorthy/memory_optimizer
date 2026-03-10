@@ -1,0 +1,14 @@
+# Build artifacts
+*.exe
+build/
+*.o
+*.obj
+
+# Logs and outputs
+*.txt
+!README.md
+
+# IDE folders
+.vs/
+.vscode/
+.gemini/
